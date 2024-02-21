@@ -1,6 +1,6 @@
 mongosh "${MONGO_URL}" --eval '
 console.log("Removing unplaced orders...")
-db.orders.deleteMany({
+const output = db.orders.deleteMany({
   placed: false,
   lastUpdated: {
     $lt: new Date(
@@ -9,4 +9,6 @@ db.orders.deleteMany({
       )
     )
   }
-})'
+})
+console.log("db.orders.deleteMany(...) ", output)
+'
