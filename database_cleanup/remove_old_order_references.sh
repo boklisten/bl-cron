@@ -1,4 +1,5 @@
-mongo "${MONGO_URL}/production" --eval '
+mongosh "${MONGO_URL}" --eval '
+console.log("Removing old order references...")
 db.userdetails.aggregate([
     {
         $lookup: {
@@ -21,13 +22,13 @@ db.userdetails.aggregate([
     },
     {
        $project: {
-           matched_orders: 0,
+           orders: 1,
        }
     },
     {
         $merge: {
             into: "userdetails",
-            whenMatched: "replace"
+            whenNotMatched: "discard"
         }
     }
 ])
