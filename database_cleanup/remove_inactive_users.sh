@@ -83,10 +83,8 @@ const usersUpForDeletion = db.users.aggregate([
 const usernames = usersUpForDeletion.map((user) => user.username);
 console.log("Found ", usernames.length, " users: ", JSON.stringify(usernames))
 
-const s1 = db.locallogins.deleteMany({username: {$in: usernames}});
-console.log("db.locallogins.deleteMany() => ", s1)
-const s2 = db.userdetails.deleteMany({email: {$in: usernames}});
-console.log("db.userdetails.deleteMany() => ", s2)
-const s3 = db.users.deleteMany({username: {$in: usernames}});
-console.log("db.users.deleteMany() => ", s3)
+const s1 = db.userdetails.deleteMany({email: {$in: usernames}});
+console.log("db.userdetails.deleteMany() => ", s1)
+const s2 = db.users.deleteMany({username: {$in: usernames}});
+console.log("db.users.deleteMany() => ", s2)
 '
