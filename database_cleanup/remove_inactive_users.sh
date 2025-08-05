@@ -85,6 +85,10 @@ console.log("Found ", usernames.length, " users: ", JSON.stringify(usernames))
 
 const s1 = db.userdetails.deleteMany({email: {$in: usernames}});
 console.log("db.userdetails.deleteMany() => ", s1)
-const s2 = db.users.deleteMany({username: {$in: usernames}});
-console.log("db.users.deleteMany() => ", s2)
+
+const validDetailIds = db.userdetails.distinct("_id");
+const s2 = db.users.deleteMany({
+  userDetail: { $nin: validDetailIds },
+});
+console.log("db.users.deleteMany() =>", s2);
 '
