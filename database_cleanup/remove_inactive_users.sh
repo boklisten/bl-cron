@@ -76,14 +76,14 @@ const usersUpForDeletion = db.users.aggregate([
   },
   {
     $project: {
-      username: 1
+      email: "$userDetail.email"
     }
   }
 ]).toArray();
-const usernames = usersUpForDeletion.map((user) => user.username);
-console.log("Found ", usernames.length, " users: ", JSON.stringify(usernames))
+const emails = usersUpForDeletion.map((user) => user.email);
+console.log("Found ", emails.length, " users: ", JSON.stringify(emails))
 
-const s1 = db.userdetails.deleteMany({email: {$in: usernames}});
+const s1 = db.userdetails.deleteMany({email: {$in: emails}});
 console.log("db.userdetails.deleteMany() => ", s1)
 
 const validDetailIds = db.userdetails.distinct("_id");
